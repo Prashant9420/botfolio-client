@@ -9,6 +9,7 @@ import EditBot from './pages/editBot.jsx';
 import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './auth/privateRoute.jsx';
 import { Toaster } from 'react-hot-toast';
+import SharedBot from './pages/sharedBot.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/bot/:id" element={<ViewBot />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/shared-bot/:id" element={<SharedBot />} />
 
         {/* Protected Routes */}
         <Route element={<PrivateRoute />}>

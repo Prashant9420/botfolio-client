@@ -12,7 +12,7 @@ import {
 import axios from '../utils/axiosInstance';
 import toast from 'react-hot-toast';
 
-const ViewBot = () => {
+const SharedBot = () => {
   const { id } = useParams();
   const [bot, setBot] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const ViewBot = () => {
   useEffect(() => {
     const fetchBot = async () => {
       try {
-        const res = await axios.get(`/bots/${id}`);
+        const res = await axios.get(`/bots/public-bots/${id}`);
         setBot(res.data);
       } catch (err) {
         toast.error('Bot not found or failed to load');
@@ -58,42 +58,8 @@ const ViewBot = () => {
 
   return (
     <Box maxWidth="md" mx="auto" p={4}>
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 3,
-      }} >
-      <Typography variant="h4" gutterBottom>{bot.name}</Typography>
-      <Button variant="contained" onClick={()=>{
-          navigator.clipboard.writeText(window.location.host + '/shared-bot/' + id);
-          toast.success('Bot link copied to clipboard!');
-        }
-      }>
-        Share this Bot
-      </Button>
-      </Box>
-      <Typography variant="subtitle1" gutterBottom color="text.secondary">{bot.persona}</Typography>
 
-      <Divider sx={{ my: 2 }} />
-
-      <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-        <Typography><strong>Project Info:</strong> {bot.projectInfo}</Typography>
-        <Typography><strong>Education:</strong> {bot.education}</Typography>
-        <Typography><strong>Experience:</strong> {bot.experience}</Typography>
-        <Typography><strong>Skills:</strong> {bot.skills?.join(', ') || 'N/A'}</Typography>
-        <Typography><strong>Certifications:</strong> {bot.certifications?.join(', ') || 'N/A'}</Typography>
-        <Typography><strong>Contact:</strong></Typography>
-        <Typography ml={2}>📧 {bot.contactInfo?.email || 'N/A'}</Typography>
-        <Typography ml={2}>📞 {bot.contactInfo?.phone || 'N/A'}</Typography>
-        <Typography ml={2}>🔗 {bot.contactInfo?.linkedin || 'N/A'}</Typography>
-        <Typography><strong>Goals:</strong> {bot.goals}</Typography>
-        <Typography><strong>Boundaries:</strong> {bot.boundaries}</Typography>
-      </Paper>
-
-      <Divider sx={{ my: 3 }} />
-
-      <Typography variant="h5" gutterBottom>Test the Bot</Typography>
+      <Typography variant="h5" gutterBottom>Bot shared by {bot.sharedBy.name} ({bot.sharedBy.email})</Typography>
 
       <Paper variant="outlined" sx={{ p: 2, mb: 3, minHeight: 200, background: '#f9f9f9' }}>
         {chatHistory.length === 0 ? (
@@ -138,4 +104,4 @@ const ViewBot = () => {
   );
 };
 
-export default ViewBot;
+export default SharedBot;
