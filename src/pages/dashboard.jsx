@@ -12,11 +12,12 @@ import {
 import { Link } from 'react-router-dom';
 import axios from '../utils/axiosInstance';
 import toast from 'react-hot-toast';
+import { useAuth } from '../auth/AuthContext';
 
 const Dashboard = () => {
   const [bots, setBots] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { user } = useAuth();
   const handleDeleteBot = async (botId) => {
     try {
       await axios.delete(`/bots/${botId}`);
@@ -43,7 +44,7 @@ const Dashboard = () => {
   return (
     <Box p={4}>
       <Typography variant="h4" gutterBottom>
-        Welcome back 👋
+        Hey {user.name.split(' ')[0]}, Welcome back 👋
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Here's a quick overview of your AI resume bots.

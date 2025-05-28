@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import axios from '../utils/axiosInstance';
 import toast from 'react-hot-toast';
+import TypingBalls from '../components/TypingBalls';
 
 const ViewBot = () => {
   const { id } = useParams();
@@ -42,7 +43,7 @@ const ViewBot = () => {
     setResponding(true);
 
     try {
-      const res = await axios.post(`/public-bots/${id}/chat`, { message: chatInput });
+      const res = await axios.post(`/chat/test-chat/${id}`, { message: chatInput });
       const botMessage = { sender: 'bot', text: res.data.reply || 'No reply' };
       setChatHistory(prev => [...prev, botMessage]);
     } catch (err) {
@@ -64,14 +65,14 @@ const ViewBot = () => {
         justifyContent: 'space-between',
         mb: 3,
       }} >
-      <Typography variant="h4" gutterBottom>{bot.name}</Typography>
-      <Button variant="contained" onClick={()=>{
+        <Typography variant="h4" gutterBottom>{bot.name}</Typography>
+        <Button variant="contained" onClick={() => {
           navigator.clipboard.writeText(window.location.host + '/shared-bot/' + id);
           toast.success('Bot link copied to clipboard!');
         }
-      }>
-        Share this Bot
-      </Button>
+        }>
+          Share this Bot
+        </Button>
       </Box>
       <Typography variant="subtitle1" gutterBottom color="text.secondary">{bot.persona}</Typography>
 
@@ -110,12 +111,15 @@ const ViewBot = () => {
                   bgcolor: msg.sender === 'user' ? 'primary.light' : 'grey.300',
                   borderRadius: 2,
                 }}
+                dangerouslySetInnerHTML={{ __html: msg.text }}
               >
-                {msg.text}
               </Typography>
             </Box>
           ))
         )}
+        {responding && <Box sx={{ mb: 1, textAlign: 'left' }}>
+          <TypingBalls />
+        </Box>}
       </Paper>
 
       <Box display="flex" gap={2}>

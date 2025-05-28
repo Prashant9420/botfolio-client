@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { config } from '../config';
 import {
   Box,
   Typography,
@@ -9,7 +10,7 @@ import {
   Button,
   Divider,
 } from '@mui/material';
-import axios from '../utils/axiosInstance';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const SharedBot = () => {
@@ -23,7 +24,7 @@ const SharedBot = () => {
   useEffect(() => {
     const fetchBot = async () => {
       try {
-        const res = await axios.get(`/bots/public-bots/${id}`);
+        const res = await axios.get(`${config.backendUrl}/bots/public-bots/${id}`);
         setBot(res.data);
       } catch (err) {
         toast.error('Bot not found or failed to load');
@@ -42,7 +43,7 @@ const SharedBot = () => {
     setResponding(true);
 
     try {
-      const res = await axios.post(`/public-bots/${id}/chat`, { message: chatInput });
+      const res = await axios.post(`${config.backendUrl}/chat/shared-chat/${id}`, { message: chatInput });
       const botMessage = { sender: 'bot', text: res.data.reply || 'No reply' };
       setChatHistory(prev => [...prev, botMessage]);
     } catch (err) {
@@ -76,8 +77,9 @@ const SharedBot = () => {
                   bgcolor: msg.sender === 'user' ? 'primary.light' : 'grey.300',
                   borderRadius: 2,
                 }}
+                dangerouslySetInnerHTML={{ __html: msg.text }}
               >
-                {msg.text}
+                {/* {msg.text} */}
               </Typography>
             </Box>
           ))
