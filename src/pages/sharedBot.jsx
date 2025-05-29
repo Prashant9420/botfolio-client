@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import TypingBalls from '../components/TypingBalls';
 
 const SharedBot = () => {
   const { id } = useParams();
@@ -79,11 +80,13 @@ const SharedBot = () => {
                 }}
                 dangerouslySetInnerHTML={{ __html: msg.text }}
               >
-                {/* {msg.text} */}
               </Typography>
             </Box>
           ))
         )}
+        {responding && <Box sx={{ mb: 1, textAlign: 'left' }}>
+          <TypingBalls />
+        </Box>}
       </Paper>
 
       <Box display="flex" gap={2}>

@@ -90,6 +90,7 @@ const ViewBot = () => {
         <Typography ml={2}>🔗 {bot.contactInfo?.linkedin || 'N/A'}</Typography>
         <Typography><strong>Goals:</strong> {bot.goals}</Typography>
         <Typography><strong>Boundaries:</strong> {bot.boundaries}</Typography>
+        <Typography><strong>Powered by:</strong> {bot.llmModel}</Typography>
       </Paper>
 
       <Divider sx={{ my: 3 }} />
