@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button, Typography, Snackbar, Alert, Grid } from '@mui/material';
+import { Box, TextField, Button, Typography, Snackbar, Alert, Grid, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../utils/axiosInstance';
 
 const EditBot = () => {
   const { id } = useParams(); // get bot id from URL
-  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
@@ -22,6 +21,7 @@ const EditBot = () => {
     },
     goals: '',
     boundaries: '',
+    llmModel: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -110,7 +110,21 @@ const EditBot = () => {
 
         <TextField label="Goals" name="goals" value={form.goals} onChange={handleChange} fullWidth multiline rows={2} margin="normal" />
         <TextField label="Boundaries" name="boundaries" value={form.boundaries} onChange={handleChange} fullWidth multiline rows={2} margin="normal" />
-
+        <FormControl fullWidth margin='normal'>
+          <InputLabel id="demo-simple-select-label">Select LLM Model</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            name='llmModel'
+            value={form.llmModel}
+            label="Select LLM Model"
+            onChange={handleChange}
+          >
+            <MenuItem value="deepseek-ai/DeepSeek-V3">deepseek-ai/DeepSeek-V3</MenuItem>
+            <MenuItem value="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8">meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8</MenuItem>
+            <MenuItem value="deepseek-ai/DeepSeek-R1">deepseek-ai/DeepSeek-R1</MenuItem>
+          </Select>
+        </FormControl>
         <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading} sx={{ mt: 3 }}>
           {loading ? 'Saving...' : 'Save Changes'}
         </Button>
