@@ -83,7 +83,8 @@ const CreateBot = () => {
           phone: ''
         },
         goals: '',
-        boundaries: ''
+        boundaries: '',
+        llmModel: 'deepseek-ai/DeepSeek-V3'
       });
       navigate('/dashboard');
     } catch (error) {

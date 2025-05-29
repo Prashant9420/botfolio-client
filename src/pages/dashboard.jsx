@@ -81,10 +81,10 @@ const Dashboard = () => {
                     {bot.persona || 'Not defined'}
                   </Typography>
                   <Typography variant="body2" mt={1}>
-                    Projects: {bot.projectInfo?.len || 0}
+                    Skills: {bot.skills.join(', ')?bot.skills.length:0}
                   </Typography>
                   <Typography variant="body2">
-                    Experiences: {bot.experience?.length || 0}
+                    Certificates: {bot.certifications.join(', ')?bot.certifications.length:0}
                   </Typography>
                 </CardContent>
                 <CardActions>
