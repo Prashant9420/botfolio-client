@@ -32,6 +32,7 @@ const CreateBot = () => {
     },
     goals: '',
     boundaries: '',
+    knowledgeBase: '',
     llmModel: 'deepseek-ai/DeepSeek-V3'
   });
 
@@ -84,6 +85,7 @@ const CreateBot = () => {
         },
         goals: '',
         boundaries: '',
+        knowledgeBase: '',
         llmModel: 'deepseek-ai/DeepSeek-V3'
       });
       navigate('/dashboard');
@@ -123,6 +125,7 @@ const CreateBot = () => {
 
         <TextField name="goals" label="Goals" value={form.goals} onChange={handleChange} fullWidth multiline rows={3} margin="normal" />
         <TextField name="boundaries" label="Boundaries" value={form.boundaries} onChange={handleChange} fullWidth multiline rows={3} margin="normal" />
+        <TextField name="knowledgeBase" label="Knowledge Base" value={form.knowledgeBase} onChange={handleChange} placeholder='provide any extra information if you want...' fullWidth multiline rows={3} margin="normal" />
         <FormControl fullWidth margin='normal'>
           <InputLabel id="demo-simple-select-label">Select LLM Model</InputLabel>
           <Select

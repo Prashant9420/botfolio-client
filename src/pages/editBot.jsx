@@ -21,6 +21,7 @@ const EditBot = () => {
     },
     goals: '',
     boundaries: '',
+    knowledgeBase: '',
     llmModel: ''
   });
 
@@ -110,6 +111,7 @@ const EditBot = () => {
 
         <TextField label="Goals" name="goals" value={form.goals} onChange={handleChange} fullWidth multiline rows={2} margin="normal" />
         <TextField label="Boundaries" name="boundaries" value={form.boundaries} onChange={handleChange} fullWidth multiline rows={2} margin="normal" />
+        <TextField label="Knowledge Base" name="knowledgeBase" value={form.knowledgeBase} onChange={handleChange} fullWidth multiline rows={3} margin="normal" />
         <FormControl fullWidth margin='normal'>
           <InputLabel id="demo-simple-select-label">Select LLM Model</InputLabel>
           <Select
