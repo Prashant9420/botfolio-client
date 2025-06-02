@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Box, Button, TextField, Typography, Paper } from '@mui/material';
+import { Box, Button, TextField, Typography, Paper, CircularProgress } from '@mui/material';
 import { useAuth } from '../auth/AuthContext.jsx';
 import { toast } from 'react-hot-toast';
 
 const Login = () => {
   const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {
@@ -12,12 +13,15 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       await login(formData.email, formData.password);
       toast.success('Login successful!');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,6 +72,7 @@ const Login = () => {
             type="submit"
             variant="contained"
             fullWidth
+            disabled={loading}
             sx={{
               mt: 3,
               py: 1.5,
@@ -80,7 +85,7 @@ const Login = () => {
               },
             }}
           >
-            Login
+            {loading?<CircularProgress/>:"Login"}
           </Button>
         </form>
       </Paper>

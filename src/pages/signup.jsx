@@ -6,12 +6,14 @@ import {
   TextField, 
   Button, 
   Typography, 
-  Paper 
+  Paper,
+  CircularProgress
 } from '@mui/material';
 import toast from 'react-hot-toast';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   const handleChange = (e) => {
@@ -19,6 +21,7 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       await axios.post('/auth/register', formData);
@@ -26,6 +29,8 @@ const Signup = () => {
       navigate('/login');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Signup failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,6 +100,7 @@ const Signup = () => {
             type="submit"
             variant="contained"
             fullWidth
+            disabled={loading}
             sx={{
               mt: 3,
               py: 1.5,
@@ -107,7 +113,7 @@ const Signup = () => {
               }
             }}
           >
-            Sign Up
+            {loading?<CircularProgress/>:"Sign Up"}
           </Button>
         </Box>
       </Paper>
