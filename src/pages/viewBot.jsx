@@ -12,6 +12,7 @@ import {
 import axios from '../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import TypingBalls from '../components/TypingBalls';
+import DOMPurify from 'dompurify';
 
 const ViewBot = () => {
   const { id } = useParams();
@@ -38,16 +39,16 @@ const ViewBot = () => {
   const handleSendMessage = async () => {
     if (!chatInput.trim()) return;
     const userMessage = { sender: 'user', text: chatInput };
-    setChatHistory(prev => [...prev, userMessage]);
+    setChatHistory((prev) => [...prev, userMessage]);
     setChatInput('');
     setResponding(true);
 
     try {
       const res = await axios.post(`/chat/test-chat/${id}`, { message: chatInput });
       const botMessage = { sender: 'bot', text: res.data.reply || 'No reply' };
-      setChatHistory(prev => [...prev, botMessage]);
+      setChatHistory((prev) => [...prev, botMessage]);
     } catch (err) {
-      setChatHistory(prev => [...prev, { sender: 'bot', text: 'Error responding.' }]);
+      setChatHistory((prev) => [...prev, { sender: 'bot', text: 'Error responding.' }]);
     } finally {
       setResponding(false);
     }
@@ -67,7 +68,8 @@ const ViewBot = () => {
       }} >
         <Typography variant="h4" gutterBottom>{bot.name}</Typography>
         <Button variant="contained" onClick={() => {
-          navigator.clipboard.writeText(window.location.host + '/shared-bot/' + id);
+          const url = `${window.location.origin}/shared-bot/${id}`;
+          navigator.clipboard.writeText(url);
           toast.success('Bot link copied to clipboard!');
         }
         }>
@@ -112,7 +114,7 @@ const ViewBot = () => {
                   bgcolor: msg.sender === 'user' ? 'primary.light' : 'grey.300',
                   borderRadius: 2,
                 }}
-                dangerouslySetInnerHTML={{ __html: msg.text }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(msg.text) }}
               >
               </Typography>
             </Box>

@@ -10,6 +10,7 @@ import Navbar from './components/Navbar.jsx';
 import PrivateRoute from './auth/privateRoute.jsx';
 import { Toaster } from 'react-hot-toast';
 import SharedBot from './pages/sharedBot.jsx';
+import NotFound from './pages/notFound.jsx';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/bot/:id" element={<ViewBot />} />
+        {/* Removed duplicate public bot view route to avoid unauthorized access */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/shared-bot/:id" element={<SharedBot />} />
@@ -30,6 +31,9 @@ function App() {
           <Route path="/edit-bot/:id" element={<EditBot />} />
           <Route path="/view-bot/:id" element={<ViewBot />} />
         </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
