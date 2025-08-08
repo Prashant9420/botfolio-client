@@ -10,7 +10,7 @@ function Navbar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1, cursor:'pointer' }} onClick={()=>navigate('/dashboard')}>Botfolio</Typography>
+        <Typography variant="h6" sx={{ flexGrow: 1, cursor:'pointer' }} onClick={()=>navigate(user ? '/dashboard' : '/')}>Botfolio</Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
         {user ? (
           <>

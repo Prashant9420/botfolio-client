@@ -22,8 +22,10 @@ const Dashboard = () => {
     try {
       await axios.delete(`/bots/${botId}`);
       setBots((prev) => prev.filter((bot) => bot._id !== botId));
+      toast.success('Bot deleted');
     } catch (err) {
-      toast.error('Error deleting bot:', err);
+      toast.error('Error deleting bot');
+      console.error(err);
     }
   }
 
@@ -33,7 +35,8 @@ const Dashboard = () => {
         const res = await axios.get('/bots');
         setBots(res.data);
       } catch (err) {
-        toast.error('Error fetching bots:', err);
+        toast.error('Error fetching bots');
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -81,10 +84,10 @@ const Dashboard = () => {
                     {bot.persona || 'Not defined'}
                   </Typography>
                   <Typography variant="body2" mt={1}>
-                    Skills: {bot.skills.join(', ')?bot.skills.length:0}
+                    Skills: {Array.isArray(bot.skills) ? bot.skills.length : 0}
                   </Typography>
                   <Typography variant="body2">
-                    Certificates: {bot.certifications.join(', ')?bot.certifications.length:0}
+                    Certificates: {Array.isArray(bot.certifications) ? bot.certifications.length : 0}
                   </Typography>
                 </CardContent>
                 <CardActions>
